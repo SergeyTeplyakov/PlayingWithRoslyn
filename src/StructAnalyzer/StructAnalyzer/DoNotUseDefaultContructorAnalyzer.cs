@@ -46,9 +46,9 @@ namespace SampleNuGetAnalyzer
             var markedWithNoDefaultCtor = genericNameSyntax?.TypeArgumentList.Arguments
                 .OfType<IdentifierNameSyntax>()
                 .Select(identifier => context.SemanticModel.GetSymbolInfo(identifier))
-                .Any(symbol => MarkedWithNoDefaultContstructorAttribute(symbol.Symbol));
+                .FirstOrDefault(symbol => MarkedWithNoDefaultContstructorAttribute(symbol.Symbol));
 
-            if (markedWithNoDefaultCtor == true)
+            if (markedWithNoDefaultCtor != null)
             {
                 var symbol = context.SemanticModel.GetSymbolInfo(genericNameSyntax).Symbol;
 
@@ -56,7 +56,8 @@ namespace SampleNuGetAnalyzer
                     IsGenericMethodWithNewConstraint(symbol) ||
                     IsGenericTypeWithNewConstraint(symbol))
                 {
-                    context.ReportDiagnostic(Diagnostic.Create(GenericContraintRule, context.Node.GetLocation()));
+                    context.ReportDiagnostic(Diagnostic.Create(GenericContraintRule, context.Node.GetLocation(),
+                        markedWithNoDefaultCtor.Value.Symbol.Name));
                 }
             }
         }
@@ -94,7 +95,7 @@ namespace SampleNuGetAnalyzer
             var typeInfo = context.SemanticModel.GetSymbolInfo(objectCreation.Type);
             if (MarkedWithNoDefaultContstructorAttribute(typeInfo.Symbol) && objectCreation.ArgumentList.Arguments.Count == 0)
             {
-                context.ReportDiagnostic(Diagnostic.Create(Rule, context.Node.GetLocation()));
+                context.ReportDiagnostic(Diagnostic.Create(Rule, context.Node.GetLocation(), typeInfo.Symbol.Name));
             }
         }
     }

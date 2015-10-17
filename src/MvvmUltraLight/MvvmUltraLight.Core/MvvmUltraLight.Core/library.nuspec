@@ -1,0 +1,20 @@
+﻿<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>MvvmUltraLight.Core</id>
+    <version>0.5.1</version>
+    <title>Mvvm Ultra light package</title>
+    <authors>Sergey Teplyakov</authors>
+    <owners>Sergey Teplyakov</owners>
+    <licenseUrl>http://opensource.org/licenses/bsd-license.php</licenseUrl>
+    <projectUrl>https://github.com/SergeyTeplyakov/VerificationFakes</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Sample stuff.</description>
+    <language>en-US</language>
+    <tags>stuff</tags>
+  </metadata>
+  <files>
+    <file src="bin\debug\*.dll" target="lib\portable-net45+win8+wp8+wpa81" />
+    <file src="bin\debug\*.pdb" target="lib\portable-net45+win8+wp8+wpa81" />
+  </files>
+</package>

@@ -44,7 +44,7 @@ class Test {
 
             HasDiagnostic(code, DiagnosticId);
         }
-
+        
         [Test]
         public void GenericMethodWithNewKeywordShouldFail()
         {

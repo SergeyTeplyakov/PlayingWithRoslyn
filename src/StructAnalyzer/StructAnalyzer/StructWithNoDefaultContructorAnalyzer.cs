@@ -33,9 +33,13 @@ namespace SampleNuGetAnalyzer
         {
             var structDeclaration = (StructDeclarationSyntax)context.Node;
             
-            if (MarkedWithNoDefaultContstructorAttribute(structDeclaration) && !HasNonDefaultConstructor(structDeclaration))
+            if (MarkedWithNoDefaultContstructorAttribute(structDeclaration))
             {
-                context.ReportDiagnostic(Diagnostic.Create(Rule, context.Node.GetLocation(), structDeclaration.Identifier.Text));
+                if (!HasNonDefaultConstructor(structDeclaration))
+                {
+                    context.ReportDiagnostic(Diagnostic.Create(Rule, context.Node.GetLocation(), structDeclaration.Identifier.Text));
+                }
+                // More rules could be added. Like when struct does have non-default constructor but non of them is accessible.
             }
         }
 
